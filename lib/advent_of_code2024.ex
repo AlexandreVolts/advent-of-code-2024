@@ -8,10 +8,19 @@ defmodule AdventOfCode2024 do
       String.split(content, "\n")
   end
 
-  def main() do
-    AdventOfCode2024.read_file("assets/0.txt") |> Exercise_0.ex1() |> IO.puts()
-    AdventOfCode2024.read_file("assets/0.txt") |> Exercise_0.ex2() |> IO.puts()
+  def run_function({func, index}) do
+    AdventOfCode2024.read_file("assets/#{div(index, 2)}.txt") |> func.() |> IO.puts()
   end
+
+  @spec main() :: :ok
+  def main() do
+    functions = [
+      &Exercise0.ex1/1, &Exercise0.ex2/1,
+      &Exercise1.ex1/1, &Exercise1.ex2/1
+    ]
+    functions |> Enum.with_index() |> Enum.each(&AdventOfCode2024.run_function/1)
+  end
+
   def start(_type, _args) do
     main()
     Supervisor.start_link([], strategy: :one_for_one)
