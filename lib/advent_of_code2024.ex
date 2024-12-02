@@ -1,5 +1,6 @@
 defmodule AdventOfCode2024 do
   use Application
+  @spec read_file(binary()) :: list(charlist())
   def read_file(file_name) do
       {:ok, file} = File.open(file_name, [:read])
       content = IO.read(file, :eof)
@@ -16,7 +17,8 @@ defmodule AdventOfCode2024 do
   def main() do
     functions = [
       &Exercise0.ex1/1, &Exercise0.ex2/1,
-      &Exercise1.ex1/1, &Exercise1.ex2/1
+      &Exercise1.ex1/1, &Exercise1.ex2/1,
+      &Exercise2.ex1/1, &Exercise2.ex2/1
     ]
     functions |> Enum.with_index() |> Enum.each(&AdventOfCode2024.run_function/1)
   end
