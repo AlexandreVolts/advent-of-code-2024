@@ -1,11 +1,11 @@
 defmodule Exercise1 do
   @spec get_integer_from_line(binary(), non_neg_integer()) :: integer()
-  def get_integer_from_line(line, index) do
+  defp get_integer_from_line(line, index) do
     line |> String.split(" ", trim: true) |> Enum.at(index) |> String.to_integer()
   end
 
   @spec get_sorted_integer_list(list(charlist()), non_neg_integer()) :: list(integer())
-  def get_sorted_integer_list(lines, index) do
+  defp get_sorted_integer_list(lines, index) do
     lines |> Enum.map(fn line -> get_integer_from_line(line, index) end) |> Enum.sort()
   end
 
