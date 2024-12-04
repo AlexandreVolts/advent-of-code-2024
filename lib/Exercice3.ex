@@ -26,6 +26,6 @@ defmodule Exercise3 do
   @spec ex1(list(String.t())) :: non_neg_integer()
   def ex1(lines), do: lines |> Enum.join() |> get_mul()
 
-  @spec ex1(list(String.t())) :: non_neg_integer()
+  @spec ex2(list(String.t())) :: non_neg_integer()
   def ex2(lines), do: lines |> Enum.join() |> remove_disable_parts() |> get_mul()
 end
