@@ -32,7 +32,7 @@ defmodule Exercise2 do
     lines |> Enum.map(&convert_to_integer_list/1) |> Enum.filter(&is_safe/1) |> length()
   end
 
-  @spec ex1(list(String.t())) :: non_neg_integer()
+  @spec ex2(list(String.t())) :: non_neg_integer()
   def ex2(lines) do
     lines |> Enum.map(&convert_to_integer_list/1) |> Enum.filter(&is_loosely_safe/1) |> length()
   end
