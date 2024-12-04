@@ -1,5 +1,5 @@
 defmodule Exercise2 do
-  @spec convert_to_integer_list(list(charlist())) :: [integer()]
+  @spec convert_to_integer_list([String.t()]) :: [integer()]
   defp convert_to_integer_list(line) do
     line |> String.split(" ", trim: true) |> Enum.map(&String.to_integer/1)
   end
@@ -27,12 +27,12 @@ defmodule Exercise2 do
     numbers |> Enum.with_index() |> Enum.filter(fn {_x, index} -> is_safe(numbers |> List.delete_at(index)) end) |> length() > 0
   end
 
-  @spec ex1(list(charlist())) :: non_neg_integer()
+  @spec ex1(list(String.t())) :: non_neg_integer()
   def ex1(lines) do
     lines |> Enum.map(&convert_to_integer_list/1) |> Enum.filter(&is_safe/1) |> length()
   end
 
-  @spec ex1(list(charlist())) :: non_neg_integer()
+  @spec ex1(list(String.t())) :: non_neg_integer()
   def ex2(lines) do
     lines |> Enum.map(&convert_to_integer_list/1) |> Enum.filter(&is_loosely_safe/1) |> length()
   end

@@ -4,12 +4,12 @@ defmodule Exercise1 do
     line |> String.split(" ", trim: true) |> Enum.at(index) |> String.to_integer()
   end
 
-  @spec get_sorted_integer_list(list(charlist()), non_neg_integer()) :: list(integer())
+  @spec get_sorted_integer_list(list(String.t()), non_neg_integer()) :: list(integer())
   defp get_sorted_integer_list(lines, index) do
     lines |> Enum.map(fn line -> get_integer_from_line(line, index) end) |> Enum.sort()
   end
 
-  @spec ex1(list(charlist())) :: integer()
+  @spec ex1(list(String.t())) :: integer()
   def ex1(lines) do
     l1 = lines |> get_sorted_integer_list(0)
     l2 = lines |> get_sorted_integer_list(1)
@@ -17,7 +17,7 @@ defmodule Exercise1 do
     l1 |> Enum.with_index() |> Enum.reduce(0, fn {x, index}, acc -> acc + abs(x - (l2 |> Enum.at(index))) end)
   end
 
-  @spec ex2(list(charlist())) :: integer()
+  @spec ex2(list(String.t())) :: integer()
   def ex2(lines) do
     l1 = lines |> get_sorted_integer_list(0)
     l2 = lines |> get_sorted_integer_list(1)
