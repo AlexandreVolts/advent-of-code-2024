@@ -5,7 +5,7 @@ defmodule Exercise4 do
     x < 0 or y < 0 or y >= length(lines) or x >= Enum.at(lines, y) |> String.length()
   end
 
-  defp has_word_in_dir(lines, word, x, y, dir_x, dir_y) do
+  defp has_word_in_dir?(lines, word, x, y, dir_x, dir_y) do
     if (String.length(word) === 0) do
       true
     else
@@ -13,7 +13,7 @@ defmodule Exercise4 do
         false
       else
         if (Enum.at(lines, y) |> String.at(x) === String.first(word)) do
-          has_word_in_dir(lines, String.slice(word, 1, String.length(word)), x + dir_x, y + dir_y, dir_x, dir_y)
+          has_word_in_dir?(lines, String.slice(word, 1, String.length(word)), x + dir_x, y + dir_y, dir_x, dir_y)
         else
           false
         end
@@ -33,7 +33,7 @@ defmodule Exercise4 do
   @spec scan_words_around(list(String.t()), String.t(), integer(), integer()) :: integer()
   defp scan_words_around(lines, word, x, y) do
     allowed_dirs = [{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}]
-    allowed_dirs |> Enum.count(fn {dir_x, dir_y} -> has_word_in_dir(lines, word, x, y, dir_x, dir_y) end)
+    allowed_dirs |> Enum.count(fn {dir_x, dir_y} -> has_word_in_dir?(lines, word, x, y, dir_x, dir_y) end)
   end
 
   @spec count_instances_of_word(list(String.t()), list(integer())) :: non_neg_integer()

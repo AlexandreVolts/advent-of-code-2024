@@ -9,7 +9,8 @@ defmodule AdventOfCode2024 do
   end
 
   def run_function({func, index}) do
-    AdventOfCode2024.read_file("assets/#{div(index, 2)}.txt") |> func.() |> IO.puts()
+    output = AdventOfCode2024.read_file("assets/#{div(index, 2)}.txt") |> func.()
+    IO.puts("Exercise #{div(index, 2)}-#{rem(index, 2) + 1}: #{output}")
   end
 
   @spec main() :: :ok
@@ -19,7 +20,8 @@ defmodule AdventOfCode2024 do
       &Exercise1.ex1/1, &Exercise1.ex2/1,
       &Exercise2.ex1/1, &Exercise2.ex2/1,
       &Exercise3.ex1/1, &Exercise3.ex2/1,
-      &Exercise4.ex1/1, &Exercise4.ex2/1
+      &Exercise4.ex1/1, &Exercise4.ex2/1,
+      &Exercise5.ex1/1, &Exercise5.ex2/1
     ]
     functions |> Enum.with_index() |> Enum.each(&AdventOfCode2024.run_function/1)
   end
