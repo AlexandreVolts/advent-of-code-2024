@@ -31,10 +31,10 @@ defmodule Exercise5 do
 
   @spec reorder_invalid_instruction(list({integer(), integer()}), list(integer())) :: list(integer())
   defp reorder_invalid_instruction(page_order, instruction) do
-      last = instruction |> Enum.find(fn left_value -> !has_matching_pair?(page_order, left_value, instruction) end)
-      if (last === nil) do
-        []
+      if (length(instruction) === 1) do
+        instruction
       else
+        last = instruction |> Enum.find(fn left_value -> !has_matching_pair?(page_order, left_value, instruction) end)
         [last] ++ reorder_invalid_instruction(page_order, instruction |> Enum.filter(fn n -> n !== last end))
       end
   end

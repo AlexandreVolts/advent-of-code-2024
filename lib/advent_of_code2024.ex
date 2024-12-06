@@ -21,7 +21,8 @@ defmodule AdventOfCode2024 do
       &Exercise2.ex1/1, &Exercise2.ex2/1,
       &Exercise3.ex1/1, &Exercise3.ex2/1,
       &Exercise4.ex1/1, &Exercise4.ex2/1,
-      &Exercise5.ex1/1, &Exercise5.ex2/1
+      &Exercise5.ex1/1, &Exercise5.ex2/1,
+      &Exercise6.ex1/1, &Exercise6.ex2/1
     ]
     functions |> Enum.with_index() |> Enum.each(&AdventOfCode2024.run_function/1)
   end
