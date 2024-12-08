@@ -46,5 +46,5 @@ defmodule Exercise6 do
   def ex1(lines), do: lines |> walk("^", "#") |> Enum.uniq() |> length()
 
   @spec ex2([String.t()]) :: non_neg_integer()
-  def ex2(lines), do: 0
+  def ex2(_lines), do: 0
 end
