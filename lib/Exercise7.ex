@@ -1,5 +1,7 @@
 defmodule Exercise7 do
-  @spec parse_equation([String.t()]) :: {integer(), list(integer())}
+  @type equation :: {integer(), list(integer())}
+
+  @spec parse_equation([String.t()]) :: equation()
   defp parse_equation(line) do
     [left, right] = line |> String.split(": ", parts: 2)
     {
@@ -11,7 +13,7 @@ defmodule Exercise7 do
   @spec concat_numbers(integer(), integer()) :: integer()
   defp concat_numbers(a, b), do: "#{a}#{b}" |> String.to_integer()
 
-  @spec count_equation_solutions({integer(), list(integer())}, list(function())) :: integer()
+  @spec count_equation_solutions(equation(), list(function())) :: integer()
   defp count_equation_solutions({solution, numbers}, functions) do
     if (hd(numbers) > solution) do
       0
@@ -26,7 +28,7 @@ defmodule Exercise7 do
     end
   end
 
-  @spec spawn_task({integer(), list(integer())}, list(function())) :: pid()
+  @spec spawn_task(equation(), list(function())) :: pid()
   defp spawn_task({solution, numbers}, functions) do
     Task.async(fn -> if count_equation_solutions({solution, numbers}, functions) > 0 do solution else 0 end end)
   end

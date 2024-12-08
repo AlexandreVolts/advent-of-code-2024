@@ -1,5 +1,7 @@
 defmodule Exercise6 do
-  @spec get([String.t()], {integer(), integer()}) :: String.t() | nil
+  @type vector :: {integer(), integer()}
+
+  @spec get([String.t()], vector()) :: String.t() | nil
   defp get(lines, {x, y}) do
     if (x < 0 or y < 0 or x >= hd(lines) |> String.length() or y >= length(lines)) do
       nil
@@ -8,7 +10,7 @@ defmodule Exercise6 do
     end
   end
 
-  @spec get_dir_from_rotation(integer()) :: {integer(), integer()}
+  @spec get_dir_from_rotation(integer()) :: vector()
   defp get_dir_from_rotation(rotation) do
     case rem(rotation, 4) do
       1 -> {1, 0}
@@ -18,7 +20,7 @@ defmodule Exercise6 do
     end
   end
 
-  @spec walk([String.t()], String.t(), String.t()) :: list({integer(), integer()})
+  @spec walk([String.t()], String.t(), String.t()) :: list(vector())
   defp walk(lines, guard, obstacle) do
     index = Enum.join(lines) |> String.split(guard) |> hd() |> String.length()
     width = hd(lines) |> String.length()
@@ -26,7 +28,7 @@ defmodule Exercise6 do
     walk(lines, {rem(index, width), div(index, width)}, 0, obstacle)
   end
 
-  @spec walk([String.t()], {integer(), integer()}, integer(), String.t()) :: list({integer(), integer()})
+  @spec walk([String.t()], vector(), integer(), String.t()) :: list(vector())
   defp walk(lines, {x, y}, rotation, obstacle) do
     {dir_x, dir_y} = get_dir_from_rotation(rotation)
     next = get(lines, {x + dir_x, y + dir_y})
