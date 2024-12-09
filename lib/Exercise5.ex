@@ -1,5 +1,6 @@
 defmodule Exercise5 do
   @type pair :: {integer(), integer()}
+
   @spec extract_integers_from_char(list(String.t()), String.t()) :: list(list(integer()))
   defp extract_integers_from_char(lines, char) do
     lines |> Enum.filter(fn str -> str |> String.contains?(char) end)
@@ -17,15 +18,15 @@ defmodule Exercise5 do
     page_order |> Enum.any?(fn {a, b} -> (a === left and b === right) end)
   end
 
-  @spec is_instruction_valid(list(pair()), list(integer())) :: boolean()
-  defp is_instruction_valid(page_order, instruction) do
+  @spec is_instruction_valid?(list(pair()), list(integer())) :: boolean()
+  defp is_instruction_valid?(page_order, instruction) do
     if (length(instruction) <= 1) do
       true
     else
       if (!is_valid_pair?(page_order, {hd(instruction), hd(tl(instruction))})) do
         false
       else
-        is_instruction_valid(page_order, tl(instruction))
+        is_instruction_valid?(page_order, tl(instruction))
       end
     end
   end
@@ -45,7 +46,7 @@ defmodule Exercise5 do
     page_order = lines |> extract_integers_from_char("|") |> Enum.map(fn elem -> {hd(elem), hd(tl(elem))} end)
     lines
     |> extract_integers_from_char(",")
-    |> Enum.filter(fn instruction -> is_instruction_valid(page_order, instruction) end)
+    |> Enum.filter(fn instruction -> is_instruction_valid?(page_order, instruction) end)
     |> Enum.reduce(0, fn instruction, acc -> acc + (instruction |> Enum.at(div(length(instruction), 2))) end)
   end
 
@@ -54,7 +55,7 @@ defmodule Exercise5 do
     page_order = lines |> extract_integers_from_char("|") |> Enum.map(fn elem -> {hd(elem), hd(tl(elem))} end)
     lines
     |> extract_integers_from_char(",")
-    |> Enum.filter(fn instruction -> !is_instruction_valid(page_order, instruction) end)
+    |> Enum.filter(fn instruction -> !is_instruction_valid?(page_order, instruction) end)
     |> Enum.map(fn instruction -> reorder_invalid_instruction(page_order, instruction) end)
     |> Enum.reduce(0, fn instruction, acc -> acc + (instruction |> Enum.at(div(length(instruction), 2))) end)
   end
