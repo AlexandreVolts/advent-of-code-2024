@@ -70,6 +70,51 @@ defmodule Exercise9 do
     end
   end
 
+  @spec get_start_index(disk(), non_neg_integer()) :: non_neg_integer()
+  defp get_start_index({disk_data, free}, chunk_size) do
+    disk_data_chunk = disk_data |> Enum.slice(0, chunk_size)
+    free_chunk = free |> Enum.slice(0, chunk_size - 1)
+    (disk_data_chunk ++ free_chunk) |> Enum.sum()
+  end
+
+  @spec get_start_index(disk()) :: non_neg_integer()
+  defp get_start_index({disk_data, free}) do
+    disk_data_chunk = disk_data |> Enum.slice(0, length(disk_data) - 1)
+    free_chunk = free |> Enum.slice(0, length(disk_data) - 1)
+    (disk_data_chunk ++ free_chunk) |> Enum.sum()
+  end
+
+  @spec update_free_space(disk_chunk(), non_neg_integer(), non_neg_integer()) :: disk_chunk()
+  defp update_free_space(free, index, value) do
+    free |> Enum.with_index() |> Enum.map(fn {x, i} -> if i === index do x - value else x end end)
+  end
+
+  @spec get_checksum_moving_files(disk()) :: non_neg_integer()
+  defp get_checksum_moving_files({disk_data, free}), do: get_checksum_moving_files({disk_data, free}, free)
+
+  @spec get_checksum_moving_files(disk(), disk_chunk()) :: non_neg_integer()
+  defp get_checksum_moving_files({disk_data, free}, default_free) do
+    if (length(disk_data) === 0) do
+      0
+    else
+      last_item = disk_data |> Enum.reverse() |> hd()
+      free_space_index = free |> Enum.find_index(fn free_space -> free_space >= last_item end)
+      uncompressed_chunk = List.duplicate(length(disk_data) - 1, last_item)
+      nxt_disk_data = disk_data |> Utils.pop()
+      if (free_space_index === nil or free_space_index >= length(disk_data)) do
+        start_index = get_start_index({disk_data, default_free})
+        output = compute_chunk_checksum(uncompressed_chunk, start_index)
+        output + get_checksum_moving_files({nxt_disk_data, free}, default_free)
+      else
+        diff = (default_free |> Enum.at(free_space_index)) - (free |> Enum.at(free_space_index))
+        start_index = get_start_index({disk_data, default_free}, free_space_index + 1) + diff
+        nxt_free = update_free_space(free, free_space_index, length(uncompressed_chunk))
+        output = compute_chunk_checksum(uncompressed_chunk, start_index)
+        output + get_checksum_moving_files({nxt_disk_data, nxt_free}, default_free)
+      end
+    end
+  end
+
   @spec ex1([String.t()]) :: non_neg_integer()
   def ex1(lines) do
     {disk_data, free} = hd(lines) |> str_to_integer_list() |> uncompress_disk()
@@ -78,6 +123,7 @@ defmodule Exercise9 do
 
   @spec ex2([String.t()]) :: non_neg_integer()
   def ex2(lines) do
-    0
+    {disk_data, free} = hd(lines) |> str_to_integer_list() |> uncompress_disk()
+    get_checksum_moving_files({disk_data, free})
   end
 end
