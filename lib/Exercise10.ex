@@ -35,12 +35,12 @@ defmodule Exercise10 do
     end
   end
 
-  @spec spawn_task_with_uniq_trailhead([String.t()], non_neg_vector()) :: pid()
+  @spec spawn_task_with_uniq_trailhead([String.t()], non_neg_vector()) :: Task.t()
   defp spawn_task_with_uniq_trailhead(lines, trailhead) do
     Task.async(fn -> compute_trailhead_score(lines, trailhead) |> Enum.uniq() |> length() end)
   end
 
-  @spec spawn_task_with_trailhead_rating([String.t()], non_neg_vector()) :: pid()
+  @spec spawn_task_with_trailhead_rating([String.t()], non_neg_vector()) :: Task.t()
   defp spawn_task_with_trailhead_rating(lines, trailhead) do
     Task.async(fn -> compute_trailhead_score(lines, trailhead) |> length() end)
   end

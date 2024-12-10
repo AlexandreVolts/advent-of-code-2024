@@ -13,8 +13,8 @@ defmodule AdventOfCode2024 do
     IO.puts("Exercise #{div(index, 2)}-#{rem(index, 2) + 1}: #{output}")
   end
 
-  @spec main() :: :ok
-  def main() do
+  @spec main([non_neg_integer()]) :: :ok
+  def main(exercises) do
     functions = [
       &Exercise0.ex1/1, &Exercise0.ex2/1,
       &Exercise1.ex1/1, &Exercise1.ex2/1,
@@ -28,11 +28,28 @@ defmodule AdventOfCode2024 do
       &Exercise9.ex1/1, &Exercise9.ex2/1,
       &Exercise10.ex1/1, &Exercise10.ex2/1
     ]
-    functions |> Enum.with_index() |> Enum.each(&AdventOfCode2024.run_function/1)
+    functions
+    |> Enum.with_index()
+    |> Enum.filter(fn {_func, index} -> length(exercises) === 0 or Enum.member?(exercises, div(index, 2)) end)
+    |> Enum.each(&AdventOfCode2024.run_function/1)
   end
 
-  def start(_type, _args) do
-    main()
+  defp parse_args(args) do
+    {opts, word, _} = args |> OptionParser.parse(switches: [exercises: :boolean])
+    if (!opts[:exercises]) do
+      []
+    else
+      hd(word)
+      |> String.replace(" ", "")
+      |> String.split(",")
+      |> Enum.map(fn pair -> pair |> String.split("-") |> Enum.map(&String.to_integer/1) end)
+      |> Enum.map(fn pair -> if (length(pair) === 2) do Enum.to_list(hd(pair)..(hd(tl(pair)))) else pair end end)
+      |> Enum.reduce([], fn array, acc -> acc ++ array end)
+    end
+  end
+
+  def start(_type, args) do
+    parse_args(args) |> IO.inspect() |> main()
     Supervisor.start_link([], strategy: :one_for_one)
   end
 end
