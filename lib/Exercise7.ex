@@ -28,7 +28,7 @@ defmodule Exercise7 do
     end
   end
 
-  @spec spawn_task(equation(), list(function())) :: pid()
+  @spec spawn_task(equation(), list(function())) :: Task.t()
   defp spawn_task({solution, numbers}, functions) do
     Task.async(fn -> if count_equation_solutions({solution, numbers}, functions) > 0 do solution else 0 end end)
   end
