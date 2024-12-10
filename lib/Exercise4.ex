@@ -1,15 +1,11 @@
 defmodule Exercise4 do
   require Integer
-  @spec is_outside(list(String.t()), integer(), integer()) :: boolean()
-  defp is_outside(lines, x, y) do
-    x < 0 or y < 0 or y >= length(lines) or x >= Enum.at(lines, y) |> String.length()
-  end
 
   defp has_word_in_dir?(lines, word, x, y, dir_x, dir_y) do
     if (String.length(word) === 0) do
       true
     else
-      if (is_outside(lines, x, y)) do
+      if (Utils.is_outside?(lines, x, y)) do
         false
       else
         if (Enum.at(lines, y) |> String.at(x) === String.first(word)) do
@@ -62,7 +58,7 @@ defmodule Exercise4 do
     if (deepness > word_center) do
       true
     else
-      if (String.length(word) |> Integer.is_even() or is_outside(lines, x - dir_x, y - dir_y) or is_outside(lines, x + dir_x, y + dir_y)) do
+      if (String.length(word) |> Integer.is_even() or Utils.is_outside?(lines, x - dir_x, y - dir_y) or Utils.is_outside?(lines, x + dir_x, y + dir_y)) do
         false
       else
         prev_dir_x = dir_x * deepness

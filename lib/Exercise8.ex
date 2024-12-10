@@ -1,8 +1,8 @@
 defmodule Exercise8 do
-  @type vector() :: {integer(), integer()}
+  @type non_neg_vector() :: {non_neg_integer(), non_neg_integer()}
   @type infinite_integer() :: non_neg_integer() | :infinity
 
-  @spec get_map_dimensions([String.t()]) :: vector()
+  @spec get_map_dimensions([String.t()]) :: non_neg_vector()
   defp get_map_dimensions(lines), do: {hd(lines) |> String.length(), length(lines)}
 
   @spec find_antenna_frequencies([String.t()], String.t()) :: [String.t()]
@@ -13,21 +13,10 @@ defmodule Exercise8 do
     |> Enum.filter(fn char -> char !== excluded end) |> Enum.uniq()
   end
 
-  @spec get_antenna_positions([String.t()], String.t()) :: [vector()]
-  defp get_antenna_positions(lines, frequency) do
-    width = hd(lines) |> String.length()
-    lines
-    |> Enum.join()
-    |> String.split(frequency)
-    |> Enum.reduce([-1], fn cur, acc -> acc ++ [hd(Enum.take(acc, -1)) + String.length(cur) + 1] end)
-    |> tl() |> Enum.reverse() |> tl() |> Enum.reverse()
-    |> Enum.map(fn index -> {rem(index, width), div(index, width)} end)
-  end
-
-  @spec compute_antinode(vector(), vector(), vector(), infinite_integer()) :: [vector()]
+  @spec compute_antinode(non_neg_vector(), non_neg_vector(), non_neg_vector(), infinite_integer()) :: [non_neg_vector()]
   defp compute_antinode(p1, p2, dimensions, max_depth), do: compute_antinode(p1, p2, dimensions, max_depth, 1)
 
-  @spec compute_antinode(vector(), vector(), vector(), integer(), infinite_integer()) :: [vector()]
+  @spec compute_antinode(non_neg_vector(), non_neg_vector(), non_neg_vector(), integer(), infinite_integer()) :: [non_neg_vector()]
   defp compute_antinode({x1, y1}, {x2, y2}, {width, height}, max_depth, depth) do
     if (depth - 1 >= max_depth) do
       []
@@ -44,7 +33,7 @@ defmodule Exercise8 do
     end
   end
 
-  @spec compute_antinodes([vector()], vector(), infinite_integer()) :: [vector()]
+  @spec compute_antinodes([non_neg_vector()], non_neg_vector(), infinite_integer()) :: [non_neg_vector()]
   defp compute_antinodes(positions, dimensions, max_depth) do
     if (length(positions) <= 1) do
       []
@@ -59,7 +48,7 @@ defmodule Exercise8 do
   def ex1(lines) do
     dimensions = get_map_dimensions(lines)
     lines |> find_antenna_frequencies(".")
-    |> Enum.flat_map(fn frequency -> get_antenna_positions(lines, frequency) |> compute_antinodes(dimensions, 1) end)
+    |> Enum.flat_map(fn frequency -> Utils.get_char_positions_in_map(lines, frequency) |> compute_antinodes(dimensions, 1) end)
     |> Enum.uniq()
     |> length()
   end
@@ -68,7 +57,7 @@ defmodule Exercise8 do
   def ex2(lines) do
     dimensions = get_map_dimensions(lines)
     lines |> find_antenna_frequencies(".")
-    |> Enum.flat_map(fn frequency -> (get_antenna_positions(lines, frequency) |> compute_antinodes(dimensions, :infinity)) ++ get_antenna_positions(lines, frequency) end)
+    |> Enum.flat_map(fn frequency -> (Utils.get_char_positions_in_map(lines, frequency) |> compute_antinodes(dimensions, :infinity)) ++ Utils.get_char_positions_in_map(lines, frequency) end)
     |> Enum.uniq()
     |> length()
   end
