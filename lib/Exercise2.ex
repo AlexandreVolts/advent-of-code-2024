@@ -22,8 +22,8 @@ defmodule Exercise2 do
     end
   end
 
-  @spec is_loosely_safe([integer()]) :: boolean()
-  defp is_loosely_safe(numbers) do
+  @spec is_loosely_safe?([integer()]) :: boolean()
+  defp is_loosely_safe?(numbers) do
     numbers |> Enum.with_index() |> Enum.filter(fn {_x, index} -> is_safe?(numbers |> List.delete_at(index)) end) |> length() > 0
   end
 
@@ -34,6 +34,6 @@ defmodule Exercise2 do
 
   @spec ex2(list(String.t())) :: non_neg_integer()
   def ex2(lines) do
-    lines |> Enum.map(&convert_to_integer_list/1) |> Enum.filter(&is_loosely_safe/1) |> length()
+    lines |> Enum.map(&convert_to_integer_list/1) |> Enum.filter(&is_loosely_safe?/1) |> length()
   end
 end
