@@ -2,9 +2,12 @@
 
 My advent of code 2024 in Elixir.
 
-## How to run ? 
+## Commands
 
-To run this project, you will need Elixir 1.17.2 with Erland/OTP 26. Run `mix run` to compile the code.
+- `mix deps.get` - install required dependencies
+- `mix run` - run the program
+
+## Configuration
 
 If you want to run specific exercises, I got too bored to configure the app, so you can directly edit the `mix.exs` file.
 

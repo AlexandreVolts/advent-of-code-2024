@@ -1,4 +1,5 @@
 defmodule Exercise11 do
+  use Memoize
   require Integer
 
   @spec slice_stone(String.t()) :: {non_neg_integer(), non_neg_integer()}
@@ -11,7 +12,7 @@ defmodule Exercise11 do
   end
 
   @spec blink(non_neg_integer(), integer(), non_neg_integer()) :: non_neg_integer()
-  defp blink(stone, depth, multiplier) do
+  defmemo blink(stone, depth, multiplier) do
     if (depth <= 0) do
       1
     else
@@ -46,8 +47,8 @@ defmodule Exercise11 do
   def ex2(lines) do
     hd(lines)
     |> Utils.str_to_integer_list()
-    #|> Enum.map(fn x -> spawn_task(x, 75, 2024) end)
-    #|> Task.await_many()
+    |> Enum.map(fn x -> spawn_task(x, 75, 2024) end)
+    |> Task.await_many()
     |> Enum.sum()
   end
 end
