@@ -6,7 +6,7 @@ defmodule Exercise7 do
     [left, right] = line |> String.split(": ", parts: 2)
     {
       left |> String.to_integer(),
-      right |> String.split(" ", trim: true) |> Enum.map(&String.to_integer/1)
+      right |> Utils.str_to_integer_list()
     }
   end
 

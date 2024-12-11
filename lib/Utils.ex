@@ -1,6 +1,11 @@
 defmodule Utils do
   @type non_neg_vector() :: {non_neg_integer(), non_neg_integer()}
 
+  @spec str_to_integer_list([String.t()], String.t()) :: [integer()]
+  def str_to_integer_list(str, separator \\ " ") do
+    str |> String.split(separator, trim: true) |> Enum.map(&String.to_integer/1)
+  end
+
   @spec pop(list(any())) :: list(any())
   def pop(list) do
     if (length(list) === 0) do

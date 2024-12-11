@@ -1,9 +1,4 @@
 defmodule Exercise2 do
-  @spec convert_to_integer_list([String.t()]) :: [integer()]
-  defp convert_to_integer_list(line) do
-    line |> String.split(" ", trim: true) |> Enum.map(&String.to_integer/1)
-  end
-
   @spec is_safe?([integer()]) :: boolean()
   defp is_safe?(numbers), do: is_safe?(numbers, 0)
 
@@ -29,11 +24,11 @@ defmodule Exercise2 do
 
   @spec ex1(list(String.t())) :: non_neg_integer()
   def ex1(lines) do
-    lines |> Enum.map(&convert_to_integer_list/1) |> Enum.filter(&is_safe?/1) |> length()
+    lines |> Enum.map(&Utils.str_to_integer_list/1) |> Enum.filter(&is_safe?/1) |> length()
   end
 
   @spec ex2(list(String.t())) :: non_neg_integer()
   def ex2(lines) do
-    lines |> Enum.map(&convert_to_integer_list/1) |> Enum.filter(&is_loosely_safe?/1) |> length()
+    lines |> Enum.map(&Utils.str_to_integer_list/1) |> Enum.filter(&is_loosely_safe?/1) |> length()
   end
 end

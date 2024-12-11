@@ -26,7 +26,8 @@ defmodule AdventOfCode2024 do
       &Exercise7.ex1/1, &Exercise7.ex2/1,
       &Exercise8.ex1/1, &Exercise8.ex2/1,
       &Exercise9.ex1/1, &Exercise9.ex2/1,
-      &Exercise10.ex1/1, &Exercise10.ex2/1
+      &Exercise10.ex1/1, &Exercise10.ex2/1,
+      &Exercise11.ex1/1, &Exercise11.ex2/1
     ]
     functions
     |> Enum.with_index()
@@ -42,14 +43,14 @@ defmodule AdventOfCode2024 do
       hd(word)
       |> String.replace(" ", "")
       |> String.split(",")
-      |> Enum.map(fn pair -> pair |> String.split("-") |> Enum.map(&String.to_integer/1) end)
+      |> Enum.map(fn pair -> pair |> Utils.str_to_integer_list("-") end)
       |> Enum.map(fn pair -> if (length(pair) === 2) do Enum.to_list(hd(pair)..(hd(tl(pair)))) else pair end end)
       |> Enum.reduce([], fn array, acc -> acc ++ array end)
     end
   end
 
   def start(_type, args) do
-    parse_args(args) |> IO.inspect() |> main()
+    parse_args(args) |> main()
     Supervisor.start_link([], strategy: :one_for_one)
   end
 end
