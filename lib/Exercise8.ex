@@ -2,9 +2,6 @@ defmodule Exercise8 do
   @type non_neg_vector() :: {non_neg_integer(), non_neg_integer()}
   @type infinite_integer() :: non_neg_integer() | :infinity
 
-  @spec get_map_dimensions([String.t()]) :: non_neg_vector()
-  defp get_map_dimensions(lines), do: {hd(lines) |> String.length(), length(lines)}
-
   @spec find_antenna_frequencies([String.t()], String.t()) :: [String.t()]
   defp find_antenna_frequencies(lines, excluded) do
     lines
@@ -46,7 +43,7 @@ defmodule Exercise8 do
 
   @spec ex1([String.t()]) :: non_neg_integer()
   def ex1(lines) do
-    dimensions = get_map_dimensions(lines)
+    dimensions = Utils.get_map_dimensions(lines)
     lines |> find_antenna_frequencies(".")
     |> Enum.flat_map(fn frequency -> Utils.get_char_positions_in_map(lines, frequency) |> compute_antinodes(dimensions, 1) end)
     |> Enum.uniq()
@@ -55,7 +52,7 @@ defmodule Exercise8 do
 
   @spec ex2([String.t()]) :: non_neg_integer()
   def ex2(lines) do
-    dimensions = get_map_dimensions(lines)
+    dimensions = Utils.get_map_dimensions(lines)
     lines |> find_antenna_frequencies(".")
     |> Enum.flat_map(fn frequency -> (Utils.get_char_positions_in_map(lines, frequency) |> compute_antinodes(dimensions, :infinity)) ++ Utils.get_char_positions_in_map(lines, frequency) end)
     |> Enum.uniq()

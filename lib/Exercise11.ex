@@ -12,7 +12,7 @@ defmodule Exercise11 do
   end
 
   @spec blink(non_neg_integer(), integer(), non_neg_integer()) :: non_neg_integer()
-  defmemo blink(stone, depth, multiplier) do
+  defmemop blink(stone, depth, multiplier) do
     if (depth <= 0) do
       1
     else

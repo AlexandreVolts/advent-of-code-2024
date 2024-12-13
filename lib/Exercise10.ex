@@ -1,21 +1,10 @@
 defmodule Exercise10 do
   @type non_neg_vector() :: {non_neg_integer(), non_neg_integer()}
 
-  @spec at([String.t()], integer(), integer()) :: non_neg_integer() | nil
-  defp at(lines, x, y) do
-    if (Utils.is_outside?(lines, x, y)) do
-      nil
-    else
-      lines |> Enum.at(y) |> String.at(x) |> String.to_integer()
-    end
-  end
-
   @spec look_around([String.t()], non_neg_vector(), non_neg_integer()) :: [non_neg_vector()]
-  defp look_around(lines, {x, y}, current) do
-    0..3
-    |> Enum.map(fn index -> index * (:math.pi / 2) end)
-    |> Enum.map(fn angle -> {round(x + :math.cos(angle)), round(y + :math.sin(angle))} end)
-    |> Enum.filter(fn {nx, ny} -> at(lines, nx, ny) === current + 1 end)
+  defp look_around(lines, position, current) do
+    Utils.get_positions_around(position)
+    |> Enum.filter(fn {nx, ny} -> Utils.at(lines, nx, ny) !== nil and (Utils.at(lines, nx, ny) |> String.to_integer()) === current + 1 end)
   end
 
   @spec compute_trailhead_score([String.t()], non_neg_vector()) :: [non_neg_vector()]

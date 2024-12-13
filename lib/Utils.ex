@@ -1,6 +1,25 @@
 defmodule Utils do
   @type non_neg_vector() :: {non_neg_integer(), non_neg_integer()}
 
+  @spec at([String.t()], integer(), integer()) :: non_neg_integer() | nil
+  def at(lines, x, y) do
+    if (Utils.is_outside?(lines, x, y)) do
+      nil
+    else
+      lines |> Enum.at(y) |> String.at(x)
+    end
+  end
+
+  @spec get_positions_around(non_neg_vector()) :: [non_neg_vector()]
+  def get_positions_around({x, y}) do
+    0..3
+    |> Enum.map(fn index -> index * (:math.pi / 2) end)
+    |> Enum.map(fn angle -> {round(x + :math.cos(angle)), round(y + :math.sin(angle))} end)
+  end
+
+  @spec get_map_dimensions([String.t()]) :: non_neg_vector()
+  def get_map_dimensions(lines), do: {hd(lines) |> String.length(), length(lines)}
+
   @spec str_to_integer_list([String.t()], String.t()) :: [integer()]
   def str_to_integer_list(str, separator \\ " ") do
     str |> String.split(separator, trim: true) |> Enum.map(&String.to_integer/1)
