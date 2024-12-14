@@ -5,8 +5,7 @@ defmodule Exercise13 do
 
   @spec get_pair(String.t()) :: pair() | nil
   defp get_pair(line) do
-    values = Regex.scan(~r/\d+/, line)
-            |> Enum.map(fn array -> hd(array) |> String.to_integer() end)
+    values = Regex.scan(~r/\d+/, line) |> Enum.map(fn array -> hd(array) |> String.to_integer() end)
     if (length(values) < 0) do
       nil
     else
@@ -26,7 +25,7 @@ defmodule Exercise13 do
     end
   end
 
-  # To understand this function (for my future me: yes, you did it without internet, GG):
+  # To understand this function (for my future self: yes, you did it without internet, GG):
   # Set the equation as an equation system where:
   # ax * x + bx * y = sx
   # ay * x + by * y = sy
