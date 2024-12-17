@@ -77,7 +77,7 @@ defmodule Exercise17 do
       ""
     else
       instruction = instructions |> Enum.at(instruction_index)
-      {output, nxt_registers, nxt_pointer} = instruction.(operand, registers, pointer) |> IO.inspect()
+      {output, nxt_registers, nxt_pointer} = instruction.(operand, registers, pointer)
       if (instruction_index === 5) do Integer.to_string(output) else "" end <> run_program(program, nxt_registers, nxt_pointer)
     end
   end
