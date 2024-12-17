@@ -48,7 +48,7 @@ defmodule Exercise15 do
           is_object_movable?({nx + (box_width - 1) * dir_x, y}, {dir_x, dir_y}, obstacles, {boxes, box_width}, {width, height})
         else
           {box_x, _box_y} = box
-          Enum.to_list(0..(box_width - 1))
+          0..(box_width - 1)
           |> Enum.all?(fn bx -> is_object_movable?({box_x + bx, ny}, {dir_x, dir_y}, obstacles, {boxes, box_width}, {width, height}) end)
         end
       else
