@@ -92,6 +92,7 @@ defmodule Exercise17 do
      |> hd()
      |> get_program()
      |> run_program({ra, rb, rc})
+     |> String.to_integer()
   end
 
   @spec ex2([String.t()]) :: non_neg_integer()
