@@ -95,7 +95,5 @@ defmodule Exercise17 do
   end
 
   @spec ex2([String.t()]) :: non_neg_integer()
-  def ex2(_lines) do
-     0
-  end
+  def ex2(_lines), do: 0
 end
