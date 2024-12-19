@@ -88,11 +88,7 @@ defmodule Exercise18 do
       byte = hd(side_bytes)
       next_bytes = tl(side_bytes)
       matching_bytes = next_bytes |> Enum.filter(fn b -> is_pair_blocking?(byte, b, size) end) |> length()
-      if (matching_bytes > 0) do
-        true
-      else
-        is_blocking_side_bytes?(next_bytes, size)
-      end
+      if (matching_bytes > 0) do true else is_blocking_side_bytes?(next_bytes, size) end
     end
   end
 
