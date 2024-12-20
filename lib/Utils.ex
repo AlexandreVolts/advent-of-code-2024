@@ -1,7 +1,7 @@
 defmodule Utils do
   @type non_neg_vector() :: {non_neg_integer(), non_neg_integer()}
 
-  @spec at([String.t()], integer(), integer()) :: non_neg_integer() | nil
+  @spec at([String.t()], integer(), integer()) :: String.t() | nil
   def at(lines, x, y) do
     if (Utils.is_outside?(lines, x, y)) do
       nil
